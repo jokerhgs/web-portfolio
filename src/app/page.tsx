@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { NavBar } from "./_components/nav-bar";
 import {
   HomeSection,
@@ -10,6 +11,8 @@ import {
   ContactSection,
 } from "./_components/sections";
 import { ThemeSwitch } from "./_components/theme-switch";
+import { AIChatBox } from "./_components/ai-chatbox";
+
 export default function HomePage() {
   return (
     <>
@@ -21,6 +24,7 @@ export default function HomePage() {
       <BlogsSection />
       <ContactSection />
       <ThemeSwitch />
+      <AIChatBox />
     </>
   );
 }
