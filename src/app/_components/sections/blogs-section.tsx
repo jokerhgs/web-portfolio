@@ -1,39 +1,56 @@
 import { motion } from "framer-motion";
+import { BlogPost } from "@/app/blogs/_types";
+import { blogPosts } from "@/app/blogs/mock";
+import Link from "next/link";
 
-type Blog = {
-  title: string;
-  description: string;
-  date: string;
-  link: string;
-  tags?: string[];
+type BlogCardProps = {
+  blog: BlogPost;
+  idx: number;
 };
 
-const recentBlogs: Blog[] = [
-  {
-    title: "Building Modern Web Apps with Next.js",
-    description:
-      "A practical guide to building fast, scalable, and maintainable web applications using Next.js.",
-    date: "2024-05-10",
-    link: "#",
-    tags: ["Next.js", "React", "Web Development"],
-  },
-  {
-    title: "Mastering TypeScript for Large Projects",
-    description:
-      "Tips and best practices for using TypeScript effectively in large-scale codebases.",
-    date: "2024-04-22",
-    link: "#",
-    tags: ["TypeScript", "Best Practices"],
-  },
-  {
-    title: "UI/UX Trends to Watch in 2024",
-    description:
-      "An overview of the latest UI/UX design trends shaping digital experiences this year.",
-    date: "2024-03-30",
-    link: "#",
-    tags: ["UI/UX", "Design", "Trends"],
-  },
-];
+const BlogCard = ({ blog, idx }: BlogCardProps) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: idx * 0.15 }}
+    viewport={{ once: true }}
+    className="bg-card rounded-xl shadow-md p-6 flex flex-col items-start hover:shadow-lg transition-shadow hover:bg-accent border border-border h-64"
+  >
+    <div className="flex items-center gap-2 mb-2">
+      <span className="text-xs text-muted-foreground">
+        {new Date(blog.date).toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })}
+      </span>
+    </div>
+    {blog.tags && (
+      <div className="flex flex-wrap gap-1 mb-2">
+        {blog.tags.map((tag: string) => (
+          <span
+            key={tag}
+            className="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+    <h3 className="text-xl font-semibold mb-1 text-left">{blog.title}</h3>
+    <p className="text-sm text-secondary-foreground text-left mb-2">
+      {blog.description}
+    </p>
+    <Link
+      key={blog.id}
+      href={`/blogs/${blog.id}`}
+      passHref
+      className="mt-auto text-primary text-sm font-medium hover:underline"
+    >
+      Read more &rarr;
+    </Link>
+  </motion.div>
+);
 
 export const BlogsSection = () => {
   return (
@@ -56,49 +73,8 @@ export const BlogsSection = () => {
           Explore my latest articles on web development, design, and technology.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-          {recentBlogs.map((blog, idx) => (
-            <motion.a
-              key={blog.title}
-              href={blog.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              viewport={{ once: true }}
-              className="bg-card rounded-xl shadow-md p-6 flex flex-col items-start hover:shadow-lg transition-shadow hover:bg-accent cursor-pointer"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs text-muted-foreground">
-                  {new Date(blog.date).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </span>
-                {blog.tags && (
-                  <div className="flex flex-wrap gap-1">
-                    {blog.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <h3 className="text-xl font-semibold mb-1 text-left">
-                {blog.title}
-              </h3>
-              <p className="text-sm text-secondary-foreground text-left mb-2">
-                {blog.description}
-              </p>
-              <span className="mt-auto text-primary text-sm font-medium hover:underline">
-                Read more &rarr;
-              </span>
-            </motion.a>
+          {blogPosts.map((blog: BlogPost, idx) => (
+            <BlogCard key={blog.id} blog={blog} idx={idx} />
           ))}
         </div>
       </motion.div>
