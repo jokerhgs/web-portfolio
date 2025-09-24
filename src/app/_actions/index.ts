@@ -22,8 +22,6 @@ export const sendMessage = async (
 
     const tokenCount = data?.usageMetadata?.totalTokenCount ?? 0;
 
-    console.log("Gemini Response: ", data);
-
     const newTokenCount = existingTokenCount + tokenCount;
 
     cookieStore.set("TOKEN_COUNT", newTokenCount.toString(), {
@@ -33,9 +31,6 @@ export const sendMessage = async (
       path: "/",
       maxAge: 60 * 60 * 24, // 1 day
     });
-
-    // Log the updated TOKEN_COUNT cookie value
-    console.log("Updated TOKEN_COUNT:", newTokenCount);
 
     return JSON.parse(JSON.stringify(data));
   } catch (error) {
