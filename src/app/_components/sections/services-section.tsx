@@ -7,7 +7,7 @@ type Service = {
   description: string;
 };
 
-const ServiceCard = ({
+export const ServiceCard = ({
   icon,
   title,
   description,
@@ -18,15 +18,17 @@ const ServiceCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: idx * 0.15 }}
     viewport={{ once: true }}
-    className="rounded-xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border border-border h-64" // fixed height for 50/50 split
-    style={{ minHeight: 256 }} 
+    className="rounded-xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border border-border h-64"
+    style={{ minHeight: 256 }}
   >
     <div className="flex flex-col items-center justify-center h-1/2 w-full">
       {icon}
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
     </div>
     <div className="flex items-center justify-center h-1/2 w-full">
-      <p className="text-sm text-secondary-foreground text-center">{description}</p>
+      <p className="text-sm text-secondary-foreground text-center">
+        {description}
+      </p>
     </div>
   </motion.div>
 );

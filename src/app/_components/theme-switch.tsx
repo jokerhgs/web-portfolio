@@ -21,7 +21,7 @@ export const ThemeSwitch = () => {
   return (
     <button
       onClick={handleSwitch}
-      className="fixed right-4 bottom-4 z-50 p-3 rounded-full border border-foreground bg-background text-foreground hover:bg-foreground/10 transition-all duration-300"
+      className="w-14 h-14 rounded-full border border-foreground bg-background text-foreground hover:bg-foreground/10 transition-all duration-300 flex items-center justify-center"
       aria-label="Toggle Theme"
     >
       {resolvedTheme === "dark" ? (

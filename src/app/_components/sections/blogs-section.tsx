@@ -77,6 +77,12 @@ export const BlogsSection = () => {
             <BlogCard key={blog.id} blog={blog} idx={idx} />
           ))}
         </div>
+        <Link
+          href="/blogs"
+          className="mt-8 text-primary text-base font-semibold hover:underline"
+        >
+          Check all blogs &rarr;
+        </Link>
       </motion.div>
     </section>
   );

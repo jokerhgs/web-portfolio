@@ -49,7 +49,7 @@ export const HomeSection = () => {
           <TextLoop
             className="text-primary text-2xl sm:text-4xl md:text-5xl"
             texts={["Kier Hagos", "Software Developer", "Tech Enthusiast"]}
-            transition="fade"
+            transition="slide-up"
           />
         </div>
         {/* Animated Divider */}
@@ -111,12 +111,9 @@ export const HomeSection = () => {
 
       {/* Scroll Indicator */}
       <motion.div
-        animate={{ y: [0, 15, 0] }}
-        transition={{
-          repeat: Infinity,
-          duration: 2,
-          ease: "easeInOut",
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 15, 0] }}
+        transition={{ delay: 0.4 }}
         className="absolute bottom-8 flex flex-col items-center cursor-pointer"
         onClick={() => scrollToSection("about")}
       >
@@ -126,9 +123,9 @@ export const HomeSection = () => {
         >
           <FaArrowDown className="text-[--text-secondary] w-5 h-5" />
         </motion.div>
-        <span className="text-xs text-[--text-secondary] mt-2">
+        <motion.div className="text-xs text-[--text-secondary] mt-2">
           Scroll Down
-        </span>
+        </motion.div>
       </motion.div>
     </section>
   );
