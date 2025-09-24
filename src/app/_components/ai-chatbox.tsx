@@ -1,20 +1,32 @@
 import { useState, useRef, useEffect } from "react";
-import { FaRegComments, FaTimes } from "react-icons/fa";
+import { FaRobot, FaTimes } from "react-icons/fa";
+import { SiGoogle } from "react-icons/si";
 import { sendMessage } from "../_actions";
 
-// Define a type for messages to avoid type errors
 type Message = {
   from: "user" | "ai";
   text: string;
 };
 
+const NovaAvatar = () => (
+  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/90 border-2 border-primary shadow">
+    <FaRobot className="text-white" size={18} />
+  </div>
+);
+
 export const AIChatBox = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { from: "ai", text: "Hi! How can I help you today?" },
+    {
+      from: "ai",
+      text: "Hello! I am Nova, an AI chat support agent here to assist you with Kier Hagos' web portfolio. I can answer questions about the portfolio, projects, technologies, or Kier Hagos himself.",
+    },
   ]);
   const [input, setInput] = useState("");
-  const [state, setState] = useState<"loading" | "error" | "">("");
+  const [state, setState] = useState<"loading" | "error" | "token-limit" | "">(
+    ""
+  );
+  const [chatDisabled, setChatDisabled] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom on new message
@@ -22,16 +34,34 @@ export const AIChatBox = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
-  // Use aiChatRepository for AI response with promise chain
+  // Use aiChatRepository for AI response with chat history
   const handleSend = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || state === "loading" || chatDisabled) return;
     const userMessage: Message = { from: "user", text: input };
     setMessages((msgs) => [...msgs, userMessage]);
     setInput("");
     setState("loading");
-    sendMessage(input)
+    // Pass the full chat history including the new user message
+    sendMessage([...messages, userMessage])
       .then((aiResponse) => {
+        // Check for token limit response
+        if (
+          typeof aiResponse === "string" &&
+          aiResponse.toLowerCase().includes("token limit")
+        ) {
+          setMessages((msgs) => [
+            ...msgs,
+            {
+              from: "ai",
+              text: "It looks like you've reached the maximum number of messages for this chat session. If you need further assistance, please visit the Contact section of the website to get in touch with Kier Hagos directly. Thank you for your interest!",
+            },
+          ]);
+          setChatDisabled(true);
+          setState("token-limit");
+          return;
+        }
+        // Normal AI response
         const message = aiResponse.candidates[0].content.parts[0].text;
         setMessages((msgs) => [
           ...msgs,
@@ -51,7 +81,7 @@ export const AIChatBox = () => {
         ]);
       })
       .finally(() => {
-        setState("");
+        if (state !== "token-limit") setState("");
       });
   };
 
@@ -60,22 +90,33 @@ export const AIChatBox = () => {
   return (
     <>
       {/* Chat Toggle Button */}
-      <button
-        aria-label="Open AI Chat Support"
-        onClick={() => setOpen((v) => !v)}
-        className="fixed z-50 bottom-6 right-6 bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center hover:bg-accent transition-all focus:outline-none shadow-[0_4px_24px_0_rgba(0,0,0,0.15)]"
-      >
-        <FaRegComments size={28} />
-      </button>
+      <div className="flex flex-col items-end">
+        <div className="flex items-center">
+          {!open && (
+            <button
+              aria-label="Open AI Chat Support"
+              onClick={() => setOpen(true)}
+              className="flex items-center bg-background px-3 py-1 rounded-lg shadow-lg border border-border select-none hover:bg-accent/10 transition-all focus:outline-none"
+              disabled={isLoading || chatDisabled}
+            >
+              <FaRobot size={20} className="text-primary mr-2" />
+              <span className="text-sm font-medium text-primary">
+                Talk with Nova
+              </span>
+            </button>
+          )}
+        </div>
+      </div>
       {/* Chat Box */}
       {open && (
-        <div className="fixed z-50 bottom-24 right-6 w-80 max-w-[95vw] bg-white dark:bg-zinc-900 border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in">
+        <div className="w-96 max-w-[95vw] bg-white dark:bg-zinc-900 border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in">
           <div className="flex items-center justify-between px-4 py-3 bg-primary text-white">
-            <span className="font-semibold">AI Chat Support</span>
+            <span className="font-semibold">Nova - AI Chat Support</span>
             <button
               aria-label="Close chat"
               onClick={() => setOpen(false)}
               className="text-white hover:text-accent focus:outline-none"
+              disabled={isLoading}
             >
               <FaTimes size={20} />
             </button>
@@ -88,15 +129,26 @@ export const AIChatBox = () => {
                   msg.from === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                <div
-                  className={`px-3 py-2 rounded-lg text-sm max-w-[80%] ${
-                    msg.from === "user"
-                      ? "bg-primary text-white"
-                      : "bg-accent/10 text-primary"
-                  }`}
-                >
-                  {msg.text}
-                </div>
+                {msg.from === "ai" ? (
+                  <>
+                    <div className="mr-2 flex-shrink-0">
+                      <NovaAvatar />
+                    </div>
+                    <div
+                      className={`px-3 py-2 rounded-lg text-sm max-w-[80%] border bg-accent/10 text-primary border-border`}
+                    >
+                      {msg.text}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className={`px-3 py-2 rounded-lg text-sm max-w-[80%] border bg-primary text-white border-primary`}
+                    >
+                      {msg.text}
+                    </div>
+                  </>
+                )}
               </div>
             ))}
             <div ref={messagesEndRef} />
@@ -107,31 +159,45 @@ export const AIChatBox = () => {
           >
             <input
               type="text"
-              className="flex-1 px-3 py-2 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-primary text-sm bg-white dark:bg-zinc-800"
-              placeholder="Type your message..."
+              className="flex-1 px-3 py-2 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-primary text-sm bg-background placeholder:text-muted-foreground"
+              placeholder={
+                chatDisabled ? "Chat disabled." : "Type your message..."
+              }
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) handleSend(e);
               }}
               autoComplete="off"
-              disabled={isLoading}
+              disabled={isLoading || chatDisabled}
             />
             <button
               type="submit"
-              className="ml-2 px-3 py-2 rounded-lg bg-primary text-white hover:bg-accent transition-all text-sm font-medium"
-              disabled={!input.trim() || isLoading}
+              className={`ml-2 px-3 py-2 rounded-lg bg-primary text-white hover:bg-accent transition-all text-sm font-medium ${
+                isLoading || chatDisabled ? "opacity-60 cursor-not-allowed" : ""
+              } flex items-center justify-center`}
+              disabled={!input.trim() || isLoading || chatDisabled}
             >
-              Send
+              {isLoading ? (
+                <span className="inline-block w-5 h-5">
+                  <span className="block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                </span>
+              ) : (
+                "Send"
+              )}
             </button>
           </form>
           {/* Powered by Gemini note */}
-          <div className="text-xs text-muted-foreground text-center py-2 bg-background border-t border-border">
-            Powered by <span className="font-semibold">Gemini</span>
+          <div className="text-xs text-muted-foreground text-center py-2 bg-background border-t border-border flex items-center justify-center gap-1">
+            Powered by
+            <span className="font-semibold flex items-center gap-1">
+              <SiGoogle className="inline-block text-[#4285F4]" size={14} />
+              Gemini
+            </span>
           </div>
         </div>
       )}
-      {/* Tailwind animation for fade-in */}
+      {/* Tailwind animation for fade-in and spinner */}
       <style jsx global>{`
         .animate-fade-in {
           animation: fadeInChat 0.25s;
@@ -144,6 +210,14 @@ export const AIChatBox = () => {
           to {
             opacity: 1;
             transform: translateY(0) scale(1);
+          }
+        }
+        .animate-spin {
+          animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
           }
         }
       `}</style>
