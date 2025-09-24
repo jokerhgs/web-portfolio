@@ -79,22 +79,4 @@ export const blogPosts: BlogPost[] = [
           <p>Enjoy instant previews and seamless production deployments with Vercel!</p>
         `,
   },
-  {
-    id: "5",
-    title: "State Management in React: Context vs Redux",
-    date: "2024-02-18",
-    description:
-      "Comparing React Context and Redux for managing state in your applications.",
-    tags: ["React", "State Management", "Context", "Redux"],
-    readTime: 6,
-    content: `
-          <p>Choosing the right state management solution is crucial for scalable React apps. This post compares Context API and Redux, highlighting their strengths and use cases.</p>
-          <h2>When to Use Each</h2>
-          <ul>
-            <li><strong>Context:</strong> Great for simple, small-scale state sharing</li>
-            <li><strong>Redux:</strong> Better for complex, large-scale applications</li>
-          </ul>
-          <p>Evaluate your app's needs before choosing a state management approach.</p>
-        `,
-  },
 ];
