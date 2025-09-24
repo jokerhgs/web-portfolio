@@ -23,8 +23,10 @@ export default function HomePage() {
       <TechnologiesSection />
       <BlogsSection />
       <ContactSection />
-      <ThemeSwitch />
-      <AIChatBox />
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-8">
+        <ThemeSwitch />
+        <AIChatBox />
+      </div>
     </>
   );
 }
