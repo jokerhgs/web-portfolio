@@ -19,7 +19,7 @@ export const AIChatBox = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       from: "ai",
-      text: "Hello! I am Nova, an AI chat support agent here to assist you with Kier Hagos' web portfolio. I can answer questions about the portfolio, projects, technologies, or Kier Hagos himself.",
+      text: "Hello! I am Nova, an AI chat support agent here to assist you with Kier Hagos' web portfolio. I can answer questions about the portfolio, technologies, or Kier Hagos himself.",
     },
   ]);
   const [input, setInput] = useState("");

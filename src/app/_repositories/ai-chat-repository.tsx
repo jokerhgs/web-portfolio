@@ -25,7 +25,7 @@ export class AIChatRepository {
 
     Technologies: JavaScript, TypeScript, Node.js, Python, Java, C#, PHP, React, Next.js, Tailwind CSS, shadcn/ui, DaisyUI, Angular, HTML5, CSS3, Sass, Vite, React Native, Expo, NativeWind, Ionic, Zustand, React Query, React Hook Form, Zod, Redux, Express, Supabase, Hono, Prisma, MongoDB, Mongoose, PostgreSQL, MySQL, MS SQL Server, Redis, Firebase, Laravel, OpenAI, Docker, Vercel, Git, Deepseek, AWS, Gemini, Grok, Jest, Vitest.
 
-    Instructions: Answer questions about the portfolio, projects, technologies, or Kier Hagos. If you don't know the answer, say so politely. Be professional, helpful, brief, and answer in paragraph form.
+    Instructions: Answer questions about the portfolio, technologies, or Kier Hagos. If you don't know the answer, say so politely. Be professional, helpful, brief, and answer in paragraph form.
     
     If the user is looking to contact Kier Hagos, suggest visiting the "Contact" section of the website. If the user is interested in articles, insights, or learning more, suggest checking out the "Blog" section.
       `.trim();
