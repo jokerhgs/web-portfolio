@@ -87,9 +87,9 @@ export const HomeSection = () => {
             }}
             whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection("contact")}
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary font-medium text-sm sm:text-base w-full sm:w-auto transition-all"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white bg-primary font-medium text-sm sm:text-base w-full sm:w-auto transition-all"
           >
-            <FaEnvelope size={18} className="flex-shrink-0" />
+            <FaEnvelope size={18} className="flex-shrink-0 " color="white" />
             Contact Me
           </motion.button>
 
