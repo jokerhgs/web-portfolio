@@ -62,7 +62,7 @@ export const ContactSection = () => {
 
           {/* Contact Grid */}
           <div className="w-full flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 border-t md:border-t-0 md:border-l border-border pt-6 md:pt-0 md:pl-6 lg:pl-8 w-full max-w-5xl">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 border-t md:border-t-0 md:border-l border-border pt-6 md:pt-0 md:pl-6 lg:pl-8 w-full max-w-5xl">
               {contactList.map(({ name, handle, link, icon: Icon }, index) => (
                 <Link
                   key={index}

@@ -14,7 +14,7 @@ const BlogCard = ({ blog, idx }: BlogCardProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: idx * 0.15 }}
     viewport={{ once: true }}
-    className="bg-card rounded-xl shadow-md p-6 flex flex-col items-start hover:shadow-lg transition-shadow hover:bg-accent border border-border h-64"
+    className="bg-card rounded-xl shadow-md p-6 flex flex-col items-start hover:shadow-lg transition-shadow hover:bg-accent border border-border"
   >
     <div className="flex items-center gap-2 mb-2">
       <span className="text-xs text-muted-foreground">

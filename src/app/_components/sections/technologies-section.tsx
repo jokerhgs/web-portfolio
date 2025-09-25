@@ -59,8 +59,6 @@ import { useRef, useEffect } from "react";
 // GenericIcon for technologies without a specific icon
 const GenericIcon = FaRegCircle;
 
-
-
 const summary = ``;
 
 const TECHNOLOGY_CATEGORIES = [
@@ -206,7 +204,7 @@ export const TechnologiesSection = () => {
           Technologies
         </h2>
         <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-4" />
-        <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed mt-8">
+        <p className="text-base max-w-7xl sm:text-lg md:text-xl text-secondary-foreground text-center leading-relaxed mt-8 px-4">
           Explore the technologies and tools I use to build robust, scalable,
           and modern solutions.
         </p>

@@ -72,7 +72,7 @@ export const NavBar = () => {
       animate="visible"
       variants={navVariants}
       transition={{ duration: 0.5 }}
-      className="fixed w-full backdrop-blur-sm z-50 h-20 flex justify-between items-center px-6 sm:px-8 bg-background text-foreground border-b border-[--color-border]"
+      className="fixed w-full backdrop-blur-sm z-50 h-20 flex justify-between items-center px-6 sm:px-8 bg-background text-foreground border-b border-border"
     >
       {/* Logo/Brand */}
       <motion.div
@@ -85,7 +85,7 @@ export const NavBar = () => {
       </motion.div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex gap-8">
+      <div className="hidden md:flex gap-8 ">
         {sections.map((section) => (
           <motion.div
             key={section.id}
@@ -106,7 +106,7 @@ export const NavBar = () => {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden relative">
+      <div className="md:hidden relative border-b ">
         <motion.div
           whileTap={{ scale: 0.9 }}
           className="cursor-pointer text-foreground"
@@ -124,7 +124,7 @@ export const NavBar = () => {
               animate="visible"
               exit="exit"
               variants={menuVariants}
-              className="absolute top-full right-0 mt-2 w-48 border border-[--color-border] rounded-lg shadow-lg py-2 px-4 z-50 bg-background text-foreground"
+              className="absolute top-full right-0 mt-2 w-48 rounded-lg shadow-lg py-2 px-4 z-50 text-foreground bg-background/90 backdrop-blur-sm"
             >
               {sections.map((section) => (
                 <motion.div

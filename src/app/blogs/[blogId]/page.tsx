@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { fetchBlogPost } from "./_actions";
 import { ThemeSwitch } from "../../_components/theme-switch";
+import Link from "next/link";
+import { FaCalendarAlt, FaClock, FaArrowLeft } from "react-icons/fa";
+import { HiPencilAlt } from "react-icons/hi";
 import "./_styles/index.css";
 
 export async function generateMetadata({
@@ -13,8 +16,14 @@ export async function generateMetadata({
   const post = await fetchBlogPost(blogId);
   if (!post) return {};
   return {
-    title: post.title,
+    title: `${post.title} - Blog`,
     description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      publishedTime: post.date,
+    },
   };
 }
 
@@ -31,31 +40,109 @@ export default async function BlogPostPage({
   }
 
   return (
-    <>
-      <main className="mx-auto pb-12 px-4 w-full bg-background min-h-screen flex flex-col items-center pt-20">
-        <div className="max-w-5xl flex flex-col items-center">
-          <a
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/95">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        {/* Back Navigation */}
+        <div className="mb-8">
+          <Link
             href="/blogs"
-            className="inline-block mb-6 text-primary hover:text-accent transition-colors text-sm font-medium self-start"
-            aria-label="Back to all blog posts"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 group"
           >
-            &larr; Back to all posts
-          </a>
-          <article className="w-full flex flex-col items-center text-center">
-            <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-            <p className="text-sm text-gray-500 mb-6">
-              {new Date(post.date).toLocaleDateString()}
-            </p>
+            <FaArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform duration-200" />
+            Back to all posts
+          </Link>
+        </div>
+
+        {/* Article Header */}
+        <article className="w-full">
+          {/* Creative Header Section */}
+          <header className="text-center mb-12 relative">
+            {/* Decorative Element */}
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 mb-6">
+              <HiPencilAlt className="w-6 h-6 text-primary" />
+            </div>
+
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-foreground mb-6 leading-tight">
+              {post.title}
+            </h1>
+
+            {/* Meta Information */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground mb-8">
+              <div className="flex items-center gap-2">
+                <FaCalendarAlt className="w-4 h-4 text-primary/60" />
+                <time dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
+
+              <div className="hidden sm:block w-1 h-1 rounded-full bg-muted-foreground/30" />
+
+              <div className="flex items-center gap-2">
+                <FaClock className="w-4 h-4 text-primary/60" />
+                <span>{post.readTime || "5"} min read</span>
+              </div>
+            </div>
+
+            {/* Description */}
+            {post.description && (
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
+                {post.description}
+              </p>
+            )}
+
+            {/* Tags */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 justify-center">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-xs font-medium bg-primary/5 text-primary rounded-full border border-primary/10"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </header>
+
+          {/* Article Content */}
+          <div className="prose prose-lg max-w-none">
             <div
-              className="rich-text text-left w-full"
+              className="rich-text text-foreground/90 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
-          </article>
-        </div>
+          </div>
+
+          {/* Article Footer */}
+          <footer className="mt-16 pt-8 border-t border-border/40">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Link
+                href="/blogs"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 group"
+              >
+                <FaArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform duration-200" />
+                Back to all posts
+              </Link>
+
+              <div className="text-xs text-muted-foreground">
+                Published on {new Date(post.date).toLocaleDateString()}
+              </div>
+            </div>
+          </footer>
+        </article>
       </main>
-      <div className="fixed bottom-8 right-8 z-50">
-        <ThemeSwitch />
+
+      {/* Theme Switch */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="bg-background/80 backdrop-blur-sm rounded-full p-2 border border-border/40">
+          <ThemeSwitch />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -2,129 +2,152 @@ import { blogPosts } from "./mock";
 import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import { HiPencilAlt } from "react-icons/hi";
 import { ThemeSwitch } from "../_components/theme-switch";
+import Link from "next/link";
 
-// Improved BlogCard component with modern design
+// Simplified truncate function
+function truncateText(html: string, maxLength: number) {
+  const text = html.replace(/<[^>]+>/g, "");
+  return text.length > maxLength
+    ? text.slice(0, maxLength).trimEnd() + "…"
+    : text;
+}
+
+// Minimalistic BlogCard with consistent sizing
 function BlogCard({ post }: { post: (typeof blogPosts)[number] }) {
+  const truncatedTitle =
+    post.title.length > 60
+      ? post.title.slice(0, 60).trimEnd() + "…"
+      : post.title;
+  const truncatedDescription = truncateText(post.description, 100);
+
   return (
     <article className="group">
-      <div className="relative overflow-hidden transition-all duration-500 rounded-2xl border border-border/30 bg-background p-6 hover:shadow-2xl hover:border-primary/30 hover:scale-[1.02] backdrop-blur-sm flex flex-col aspect-[3/4] min-h-[320px]">
-        {/* Gradient overlay effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="relative overflow-hidden rounded-xl border border-border/40 bg-background/50 p-5 transition-all duration-400 hover:shadow-lg hover:border-primary/40 hover:scale-[1.02] backdrop-blur-sm h-full flex flex-col">
+        {/* Subtle hover gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-        <div className="relative flex flex-col gap-4 flex-1 z-10">
-          <div>
-            <a
-              href={`/blogs/${post.id}`}
-              className="text-xl font-bold text-primary group-hover:text-accent transition-colors duration-300 line-clamp-2 hover:underline decoration-2 underline-offset-4"
-            >
-              {post.title}
-            </a>
+        <div className="relative flex flex-col h-full gap-4 z-10">
+          {/* Title with consistent truncation */}
+          <Link
+            href={`/blogs/${post.id}`}
+            className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2 min-h-[3rem] flex items-start"
+          >
+            {truncatedTitle}
+          </Link>
 
-            <div className="flex items-center gap-3 mt-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <FaCalendarAlt className="w-3 h-3 text-accent/80" />
-                <span>
-                  {new Date(post.date).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </span>
-              </div>
-              <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-              <span className="text-accent font-semibold">
-                {post.readTime} min read
+          {/* Minimal metadata */}
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <FaCalendarAlt className="w-3 h-3 text-primary/60" />
+              <span>
+                {new Date(post.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </span>
             </div>
+            <span className="text-primary/60 font-medium">•</span>
+            <span className="text-primary font-medium">
+              {post.readTime} min
+            </span>
           </div>
 
-          <div
-            className="rich-text text-foreground/70 mb-4 line-clamp-4 text-sm leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.description }}
-          />
+          {/* Description with consistent line clamp */}
+          <p className="text-sm text-foreground/70 leading-relaxed line-clamp-3 flex-1 min-h-[4.5rem]">
+            {truncatedDescription}
+          </p>
 
-          <div className="flex flex-col gap-3 justify-between items-center pt-4 border-t border-border/20 mt-auto">
-            <div className="flex flex-wrap gap-2 justify-center">
-              {post.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="p-1 text-xs font-semibold bg-primary/5 text-primary rounded-md border border-primary/10 hover:bg-primary/10 transition-colors duration-200"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href={`/blogs/${post.id}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 transition-all duration-300 group-hover:translate-x-1 text-sm shadow-lg hover:shadow-xl hover:scale-105"
-              aria-label={`Read more about ${post.title}`}
-            >
-              Read More
-              <FaArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
+          {/* Creative tags with hover scale */}
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {post.tags?.slice(0, 2).map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-1 text-xs font-medium bg-primary/5 text-primary rounded-full border border-primary/10 hover:scale-105 transition-transform duration-200"
+              >
+                #{tag}
+              </span>
+            ))}
+            {post.tags && post.tags.length > 2 && (
+              <span className="px-2 py-1 text-xs text-muted-foreground">
+                +{post.tags.length - 2}
+              </span>
+            )}
           </div>
+
+          {/* Minimal read more button */}
+          <Link
+            href={`/blogs/${post.id}`}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-accent transition-colors duration-300 group/btn mt-auto"
+          >
+            Read more
+            <FaArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
+          </Link>
         </div>
       </div>
     </article>
   );
 }
 
-function BlogNavBar() {
-  return (
-    <nav className="w-full bg-background/90 border-b border-border/30 sticky top-0 z-30 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
-        <a
-          href="/"
-          className="inline-flex items-center gap-3 text-primary hover:text-accent transition-all duration-300 text-lg font-semibold hover:gap-4 group"
-          aria-label="Back to home"
-        >
-          <span className="group-hover:-translate-x-1 transition-transform">
-            ←
-          </span>
-          Back to Home
-        </a>
-      </div>
-    </nav>
-  );
-}
-
 export default function BlogsPage() {
   return (
-    <>
-      <BlogNavBar />
-      <main
-        className="mx-auto py-20 px-6 min-h-screen bg-gradient-to-b from-background to-background/80"
-        id="all-posts"
-      >
-        <div className="text-center mb-16">
-          <div className="flex flex-col items-center justify-center mb-6 gap-4">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-20 animate-pulse" />
-              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl border border-primary/20">
-                <HiPencilAlt className="w-6 h-6 text-primary" />
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-300% animate-gradient">
-              All Blog Posts
-            </h1>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/95">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Back link at top left */}
+        <div className="mb-8 sm:mb-12">
+          <Link
+            href="/blogs"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 group"
+          >
+            <span className="group-hover:-translate-x-1 transition-transform duration-200">
+              ←
+            </span>
+            Back to all posts
+          </Link>
+        </div>
+
+        {/* Minimal header with creative layout */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 mb-4">
+            <HiPencilAlt className="w-5 h-5 text-primary" />
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Discover insights, tutorials, and thoughts from our latest writings
+
+          <h1 className="text-3xl sm:text-4xl font-light text-foreground mb-3">
+            Blog Posts
+          </h1>
+
+          <p className="text-muted-foreground max-w-md mx-auto text-sm leading-relaxed">
+            Thoughts, tutorials, and insights from our latest writings
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {blogPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
-            ))}
-          </div>
+        {/* Creative grid layout with consistent card sizes */}
+        <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {blogPosts.map((post) => (
+            <BlogCard key={post.id} post={post} />
+          ))}
+        </div>
+
+        {/* Minimal footer note */}
+        <div className="text-center mt-16">
+          <p className="text-xs text-muted-foreground">
+            Showing {blogPosts.length} posts •
+            <Link
+              href="/"
+              className="hover:text-primary transition-colors ml-1"
+            >
+              Back to home
+            </Link>
+          </p>
         </div>
       </main>
-      <div className="fixed bottom-8 right-8 z-50">
-        <ThemeSwitch />
+
+      {/* Subtle theme switch */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="bg-background/80 backdrop-blur-sm rounded-full p-2 border border-border/40">
+          <ThemeSwitch />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

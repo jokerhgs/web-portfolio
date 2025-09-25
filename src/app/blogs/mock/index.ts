@@ -7,7 +7,7 @@ export const blogPosts: BlogPost[] = [
     date: "2025-06-01",
     description:
       "A comprehensive guide to building fast, scalable, and SEO-friendly web applications using Next.js.",
-    tags: ["Next.js", "React", "Web Development", "SSR", "Frontend"],
+    tags: ["Next.js", "React", "Frontend", "Web Development", "SSR"],
     readTime: 7,
     content: `
             <p>Next.js is a production-ready React framework that enables developers to build modern, high-performance web applications with minimal configuration. Its opinionated structure and built-in optimizations make it an ideal choice for startups, enterprises, and developers seeking speed, scalability, and SEO advantages.</p>
