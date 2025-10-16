@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.20.0",
+    "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.23.18",
     "motion": "^12.23.18",
     "next": "15.5.3",

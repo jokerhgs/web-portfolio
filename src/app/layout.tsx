@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import { ThemeProvider } from "./_providers/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const firaCode = Fira_Code({
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
   },
   description:
     "Personal web portfolio showcasing projects, blog posts, and ways to get in touch.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -33,6 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

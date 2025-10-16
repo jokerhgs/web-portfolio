@@ -8,6 +8,7 @@ import {
   ServicesSection,
   TechnologiesSection,
   BlogsSection,
+  ProjectsSection,
   ContactSection,
 } from "./_components/sections";
 import { ThemeSwitch } from "./_components/theme-switch";
@@ -22,6 +23,7 @@ export default function HomePage() {
       <ServicesSection />
       <TechnologiesSection />
       <BlogsSection />
+      <ProjectsSection />
       <ContactSection />
       <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-8">
         <ThemeSwitch />

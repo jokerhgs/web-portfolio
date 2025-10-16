@@ -37,7 +37,7 @@ export const AboutSection = () => {
             </span>
           </div>
           <div className="w-full lg:w-2/3 flex flex-col items-center lg:items-start justify-center px-4">
-            <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed lg:text-left text-justify">
+            <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed text-justify">
               Hello! I'm <span className="text-primary">Kier Hagos</span>, a
               passionate software developer and tech enthusiast. I love building
               innovative solutions that make a difference and enjoy exploring
@@ -47,7 +47,7 @@ export const AboutSection = () => {
               about the latest trends in tech or collaborating on exciting
               projects.
             </p>
-            <p className="text-base  sm:text-lg md:text-xl text-secondary-foreground leading-relaxed lg:text-left text-justify mt-4">
+            <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed text-justify mt-4">
               I specialize in full-stack web and mobile development, with a
               focus on modern frameworks and integrating AI to improve user
               experiences. I'm committed to continuous learning and delivering
