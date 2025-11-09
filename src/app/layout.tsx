@@ -11,8 +11,8 @@ const firaCode = Fira_Code({
 
 export const metadata: Metadata = {
   title: {
-    default: "Kier Hagos",
-    template: "%s | Kier Hagos",
+    default: "Joe Kier Hagos",
+    template: "%s | Joe Kier Hagos",
   },
   description:
     "Personal web portfolio showcasing projects, blog posts, and ways to get in touch.",

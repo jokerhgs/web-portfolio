@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { FaRobot, FaTimes } from "react-icons/fa";
 import { SiGoogle } from "react-icons/si";
@@ -8,7 +9,7 @@ type Message = {
   text: string;
 };
 
-const NovaAvatar = () => (
+const JokerAIAvatar = () => (
   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/90 border-2 border-primary shadow">
     <FaRobot className="text-white" size={18} />
   </div>
@@ -19,7 +20,7 @@ export const AIChatBox = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       from: "ai",
-      text: "Hello! I am Nova, an AI chat support agent here to assist you with Kier Hagos' web portfolio. I can answer questions about the portfolio, technologies, or Kier Hagos himself.",
+      text: "Hello! I am Joker AI, an AI chat support agent here to assist you with Kier Hagos' web portfolio. I can answer questions about the portfolio, technologies, or Kier Hagos himself.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -101,7 +102,7 @@ export const AIChatBox = () => {
             >
               <FaRobot size={20} className="text-primary mr-2" />
               <span className="text-sm font-medium text-primary">
-                Talk with Nova
+                Talk with Joker AI
               </span>
             </button>
           )}
@@ -143,7 +144,7 @@ export const AIChatBox = () => {
               `}
             >
               <div className="flex items-center justify-between px-4 py-3 bg-primary text-white">
-                <span className="font-semibold">Nova - AI Chat Support</span>
+                <span className="font-semibold">Joker AI - Chat Support</span>
                 <button
                   aria-label="Close chat"
                   onClick={() => setOpen(false)}
@@ -164,7 +165,7 @@ export const AIChatBox = () => {
                     {msg.from === "ai" ? (
                       <>
                         <div className="mr-2 flex-shrink-0">
-                          <NovaAvatar />
+                          <JokerAIAvatar />
                         </div>
                         <div
                           className={`px-3 py-2 rounded-lg text-sm max-w-[80%] border bg-accent/10 text-primary border-border`}
@@ -241,7 +242,7 @@ export const AIChatBox = () => {
               `}
             >
               <div className="flex items-center justify-between px-4 py-3 bg-primary text-white">
-                <span className="font-semibold">Nova - AI Chat Support</span>
+                <span className="font-semibold">Joker AI - Chat Support</span>
                 <button
                   aria-label="Close chat"
                   onClick={() => setOpen(false)}
@@ -262,7 +263,7 @@ export const AIChatBox = () => {
                     {msg.from === "ai" ? (
                       <>
                         <div className="mr-2 flex-shrink-0">
-                          <NovaAvatar />
+                          <JokerAIAvatar />
                         </div>
                         <div
                           className={`px-3 py-2 rounded-lg text-sm max-w-[80%] border bg-accent/10 text-primary border-border`}

@@ -20,7 +20,9 @@ export const AboutSection = () => {
           About Me
         </h2>
         <div className="h-px w-20 sm:w-24 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-4" />
+
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 w-full justify-between">
+          {/* Profile Image */}
           <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 flex flex-col gap-2 items-center md:items-start justify-center md:justify-start">
             <div className="w-full max-w-xs sm:max-w-sm flex flex-col items-center">
               <Image
@@ -36,23 +38,29 @@ export const AboutSection = () => {
               *Image enhanced by AI
             </span>
           </div>
+
+          {/* Description */}
           <div className="w-full lg:w-2/3 flex flex-col items-center lg:items-start justify-center px-4">
-            <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed text-justify">
-              Hello! I'm <span className="text-primary">Kier Hagos</span>, a
-              passionate software developer and tech enthusiast. I love building
-              innovative solutions that make a difference and enjoy exploring
-              new technologies. With a strong background in software
-              engineering, I strive to create clean, efficient, and impactful
-              digital experiences. When I'm not coding, you can find me learning
-              about the latest trends in tech or collaborating on exciting
-              projects.
-            </p>
-            <p className="text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed text-justify mt-4">
-              I specialize in full-stack web and mobile development, with a
-              focus on modern frameworks and integrating AI to improve user
-              experiences. I'm committed to continuous learning and delivering
-              high-quality results.
-            </p>
+            <div className="w-full flex flex-col gap-2">
+              <div className="text-base sm:text-lg md:text-xl font-semibold text-primary text-center lg:text-left">
+                Joe Kier Hagos <span className="text-gray-400">/ˈjōker/</span>
+              </div>
+              <div className="flex flex-col text-base sm:text-lg md:text-xl text-secondary-foreground leading-relaxed text-justify mt-2">
+                <div>
+                  I help organizations achieve impact with scalable software and
+                  AI solutions. With a foundation in Software Engineering,
+                  DevOps, and AI, I design applications and systems that
+                  optimize processes and boost productivity.
+                </div>
+                <div className="mt-4">
+                  My experience spans full-stack development, cloud
+                  infrastructure, and AI integration, enabling me to bridge
+                  robust software and intelligent automation. I prioritize good
+                  communication, strong solutions, and collaboration for
+                  tangible results.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>

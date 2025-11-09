@@ -1,42 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaGithub } from "react-icons/fa";
-import { FaSquareUpwork } from "react-icons/fa6";
-import { SiGmail } from "react-icons/si";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaGithub,
+  FaLinkedinIn,
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export const ContactSection = () => {
   const contactList = [
     {
       name: "Facebook",
-      handle: "Kier Hagos",
+      handle: "Joe Kier Hagos",
       link: "https://web.facebook.com/joekier.hagos",
       icon: FaFacebookF,
-    },
-    {
-      name: "Instagram",
-      handle: "@joker.hgs",
-      link: "https://www.instagram.com/joker.hgs",
-      icon: FaInstagram,
-    },
-    {
-      name: "Email",
-      handle: "kierhagos0@gmail.com",
-      link: "https://mail.google.com/mail/?view=cm&to=kierhagos0@gmail.com",
-      icon: SiGmail,
-    },
-
-    {
-      name: "Upwork",
-      handle: "Kier H.",
-      link: "https://www.upwork.com/freelancers/~018fe55363de40cbb6",
-      icon: FaSquareUpwork,
     },
     {
       name: "GitHub",
       handle: "jokerhgs",
       link: "https://github.com/jokerhgs",
       icon: FaGithub,
+    },
+    {
+      name: "LinkedIn",
+      handle: "Joe Kier Hagos",
+      link: "https://www.linkedin.com/in/joe-kier-hagos/",
+      icon: FaLinkedinIn,
+    },
+    {
+      name: "Gmail",
+      handle: "kierhagos0@gmail.com",
+      link: "mailto:kierhagos0@gmail.com",
+      icon: MdEmail,
     },
   ];
 

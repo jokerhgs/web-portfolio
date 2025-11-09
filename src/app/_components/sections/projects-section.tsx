@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -95,7 +95,7 @@ function ProjectCard({
   );
 }
 
-export default function ProjectsSection() {
+export const ProjectsSection = () => {
   return (
     <section
       id="projects"
@@ -131,4 +131,4 @@ export default function ProjectsSection() {
       </div>
     </section>
   );
-}
+};

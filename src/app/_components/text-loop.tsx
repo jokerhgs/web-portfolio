@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ReactNode, ReactElement } from "react";
 
 type TextLoopProps = {
-  texts: string[];
+  children: ReactElement[]; // expects multiple <Text> children or similar React elements
   interval?: number;
   className?: string;
   transition?: "fade" | "slide-left" | "slide-up";
 };
 
 export const TextLoop = ({
-  texts,
+  children,
   interval = 2000,
   className = "",
   transition = "fade",
@@ -18,13 +18,17 @@ export const TextLoop = ({
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Ensure children is always an array
+  const childrenArray = Array.isArray(children) ? children : [children];
+  const childrenCount = childrenArray.length;
+
   useEffect(() => {
     setShow(false);
     const fadeOut = setTimeout(() => setShow(true), 50);
     timeoutRef.current = setTimeout(() => {
       setShow(false);
       setTimeout(() => {
-        setIndex((prev) => (prev + 1) % texts.length);
+        setIndex((prev) => (prev + 1) % childrenCount);
         setDirection("next");
         setShow(true);
       }, 200); // match transition-out duration
@@ -33,7 +37,7 @@ export const TextLoop = ({
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       clearTimeout(fadeOut);
     };
-  }, [index, texts.length, interval]);
+  }, [index, childrenCount, interval]);
 
   let transitionClass = "";
   switch (transition) {
@@ -58,7 +62,7 @@ export const TextLoop = ({
 
   return (
     <span className={`inline-block ${transitionClass} ${className}`}>
-      {texts[index]}
+      {childrenArray[index]}
     </span>
   );
 };

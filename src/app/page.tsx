@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
 import { NavBar } from "./_components/nav-bar";
 import {
   HomeSection,

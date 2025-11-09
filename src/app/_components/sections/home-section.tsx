@@ -1,3 +1,4 @@
+"use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { TextLoop } from "../text-loop";
@@ -48,9 +49,12 @@ export const HomeSection = () => {
         <div className="text-2xl sm:text-4xl md:text-6xl font-bold h-16 sm:h-20 md:h-28 flex flex-col items-center justify-center">
           <TextLoop
             className="text-primary text-2xl sm:text-4xl md:text-5xl"
-            texts={["Kier Hagos", "Software Developer", "Tech Enthusiast"]}
             transition="slide-up"
-          />
+          >
+            <span>Joker</span>
+            <span>Software Engineer</span>
+            <span>Tech Enthusiast</span>
+          </TextLoop>
         </div>
         {/* Animated Divider */}
         <motion.div

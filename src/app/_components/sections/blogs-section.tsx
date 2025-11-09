@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { BlogPost } from "@/app/blogs/_types";
 import { blogPosts } from "@/app/blogs/mock";
