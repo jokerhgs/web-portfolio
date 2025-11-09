@@ -80,7 +80,7 @@ export const NavBar = () => {
         className="flex flex-col cursor-pointer"
         onClick={() => scrollToSection("home")}
       >
-        <span className="text-lg font-medium text-foreground">Joker</span>
+        <span className="text-lg font-medium text-primary">Joe Kier Hagos</span>
       </motion.div>
 
       {/* Desktop Navigation */}
